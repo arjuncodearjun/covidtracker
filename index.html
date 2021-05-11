@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Covid Tracker</title>
+    <link
+      rel="stylesheet"
+      href="https://cdn.jsdelivr.net/npm/bootstrap@4.6.0/dist/css/bootstrap.min.css"
+    />
+    <link rel="icon" href="coronavirus.png" />
+   
+  </head>
+  <body>
+    <div class="container">
+      <h1 class="text-center mt-5">Covid 19 Tracker: WorldWide</h1>
+      <table class="table table-hover text-center mt-5 mx-2">
+        <thead>
+          <tr>
+            <th>Total Cases</th>
+            <th>Total Deaths</th>
+            <th>Total Recovered</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr id="data"></tr>
+        </tbody>
+      </table>
+      <div class="text-center">
+        <button onclick="refreshData()" class="btn btn-danger">
+          Get Updated Data
+        </button>
+      </div>
+    </div>
+
+  </body>
+  <footer style = "top: 60vh; position:relative; width:100;"  class="bg-dark text-light text-center py-3 my-3" >
+    <p class="">@arjungupta</p>
+ </footer >
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+  <script>
+    // $(document).ready(function () {
+    init();
+
+    function init() {
+      var url = "https://api.covid19api.com/summary";
+      var data = "";
+      $.get(url, function (data) {
+    //  console.log(data.Global)
+
+        data = `
+            <td>${data.Global.TotalConfirmed}</td>
+            <td>${data.Global.TotalDeaths}</td>
+            <td>${data.Global.TotalRecovered}</td>
+            `;
+        $("#data").html(data);
+      });
+    }
+
+    function refreshData() {
+      clearData();
+      init();
+    }
+    function clearData() {
+      $("#data").empty();
+    }
+  </script>
+</html>
